@@ -24,7 +24,7 @@ int main()
   {
     for (int j = i + 1; j < numbers.size() - 1; j++)
     {
-      auto z = find(numbers.begin() + j+1, numbers.end(), 2020 - numbers[i] - numbers[j]);
+      auto z = find(numbers.begin() + j + 1, numbers.end(), 2020 - numbers[i] - numbers[j]);
 
       if (z != numbers.end())
       {
