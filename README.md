@@ -2,7 +2,7 @@
 
 [Advent of code](https://adventofcode.com/)
 
-##### --- Day 1: 
+##### --- Day 1: Report Repair ---
 ##### --- Day 2: 
 ##### --- Day 3: 
 ##### --- Day 4: 
