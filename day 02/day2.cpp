@@ -12,16 +12,13 @@ int main()
   int solutionPart1 = 0, solutionPart2 = 0;
 
   int lowest, highest;
-
-  string passwordPolicyWithDelimiter; // password policy ending with the ':' delimiter
+  char passwordPolicy;
   string password;
 
   char delimiter; // '-' delimiter between the lowest and highest number
 
-  while (cin >> lowest >> delimiter >> highest >> passwordPolicyWithDelimiter >> password)
+  while (cin >> lowest >> delimiter >> highest >> passwordPolicy >> delimiter >> password)
   {
-    int passwordPolicy = passwordPolicyWithDelimiter[0]; // password policy without the ':' delimiter
-
     int count = std::count(password.begin(), password.end(), passwordPolicy);
 
     if (count >= lowest && count <= highest)
