@@ -15,7 +15,7 @@ int main()
   char passwordPolicy;
   string password;
 
-  char delimiter; // '-' delimiter between the lowest and highest number
+  char delimiter;
 
   while (cin >> lowest >> delimiter >> highest >> passwordPolicy >> delimiter >> password)
   {
