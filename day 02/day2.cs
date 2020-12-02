@@ -7,12 +7,13 @@ namespace AdventProject
   {
     static void Main(string[] args)
     {
+      string inputFile = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + @"\in.txt";
+      StreamReader cin = new StreamReader(inputFile);
+
       int solutionPart1 = 0, solutionPart2 = 0;
       int lowest, highest;
       char passwordPolicy;
-      String password, numbers;
-      string inputFile = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + @"\in.txt";
-      StreamReader cin = new StreamReader(inputFile);
+      string password;
 
       string inputLine;
       while (!cin.EndOfStream)
