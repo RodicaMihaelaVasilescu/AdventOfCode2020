@@ -3,7 +3,7 @@
 [Advent of code](https://adventofcode.com/)
 
 ##### --- Day 1: Report Repair ---
-##### --- Day 2: 
+##### --- Day 2: Password Philosophy ---
 ##### --- Day 3: 
 ##### --- Day 4: 
 ##### --- Day 5: 
