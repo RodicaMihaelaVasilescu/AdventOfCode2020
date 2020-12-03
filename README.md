@@ -4,7 +4,7 @@
 
 ##### --- Day 1: Report Repair ---
 ##### --- Day 2: Password Philosophy ---
-##### --- Day 3: 
+##### --- Day 3: Toboggan Trajectory ---
 ##### --- Day 4: 
 ##### --- Day 5: 
 ##### --- Day 6: 
