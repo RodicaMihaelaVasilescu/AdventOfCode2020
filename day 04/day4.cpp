@@ -2,131 +2,136 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <map>
+#include <algorithm>
 
 using namespace std;
 
-struct passport {
-  string   byr;
-  string   iyr;
-  string   eyr;
-  string   hgt;
-  string   hcl;
-  string   ecl;
-  string   pid;
-  string   cid;
-};
+#define BYR "byr"
+#define IYR "iyr"
+#define EYR "eyr"
+#define HGT "hgt"
+#define HCL "hcl"
+#define ECL "ecl"
+#define PID "pid"
+#define CID "cid"
 
-string myFind(string s, string substr)
+string myFind1(string value, string inputLine, string fieldName)
 {
-  auto found = s.find(substr);
-
-  if (found != std::string::npos)
+  if (value != "")
   {
-    int x = s.find(" ", found + 3);
-    int y = x - found - 4;
-    string i = s.substr(found + 4, y);
-    if (substr == "byr")
-    {
-      for (int j = 0; j < i.size(); j++)
-      {
-        if (i[j] < '0' || i[j]>'9')
-        {
-          return"";
-        }
-      }
-      int y = stoi(i);
-      if (y < 1920 || y> 2002)
-        return"";
+    return value;
+  }
+  auto fieldValuePosition = inputLine.find(fieldName);
+  if (fieldValuePosition != string::npos)
+  {
+    fieldValuePosition += fieldName.length() + 1;
+    auto delimiterPosition = inputLine.find(" ", fieldValuePosition);
+    return inputLine.substr(fieldValuePosition, delimiterPosition - fieldValuePosition);
+  }
+  else return "";
+}
 
+string myFind2(string value, string inputLine, string fieldName)
+{
+  if (value != "")
+  {
+    return value;
+  }
+
+  auto fieldValuePosition = inputLine.find(fieldName);
+
+  if (fieldValuePosition != std::string::npos)
+  {
+    fieldValuePosition += fieldName.length() + 1;
+    auto delimiterPosition = inputLine.find(" ", fieldValuePosition);
+    value = inputLine.substr(fieldValuePosition, delimiterPosition - fieldValuePosition);
+
+    if (fieldName == BYR)
+    {
+      // byr(Birth Year) - four digits; at least 1920 and at most 2002.
+      for_each(value.begin(), value.end(), [](char ch) { if (!isdigit(ch)) return ""; });
+      int year = stoi(value);
+      return year >= 1920 && year <= 2002 ? value : "";
     }
-    if (substr == "iyr")
+    else if (fieldName == IYR)
     {
-      for (int j = 0; j < i.size(); j++)
-      {
-        if (i[j] < '0' || i[j]>'9')
-        {
-          return"";
-        }
-      }
-      int y = stoi(i);
-      if (y < 2010 || y> 2020)
-        return"";
-
+      // iyr(Issue Year) - four digits; at least 2010 and at most 2020.
+      for_each(value.begin(), value.end(), [](char ch) { if (!isdigit(ch)) return ""; });
+      int year = stoi(value);
+      return year >= 2010 && year <= 2020 ? value : "";
     }
-    if (substr == "eyr")
+    if (fieldName == EYR)
     {
-      for (int j = 0; j < i.size(); j++)
-      {
-        if (i[j] < '0' || i[j]>'9')
-        {
-          return"";
-        }
-      }
-      int y = stoi(i);
-      if (y < 2010 || y> 2030)
-        return"";
-
+      // eyr(Expiration Year) - four digits; at least 2020 and at most 2030.
+      for_each(value.begin(), value.end(), [](char ch) { if (!isdigit(ch)) return ""; });
+      int year = stoi(value);
+      return year >= 2020 && year <= 2030 ? value : "";
     }
-    if (substr == "hgt")
+    if (fieldName == HGT)
     {
-      for (int j = 0; j < i.size() - 2; j++)
-      {
-        if (i[j] < '0' || i[j]>'9' || j > 3)
-        {
-          return"";
-        }
-      }
-      if (i[i.size() - 2] != 'i' && i[i.size() - 2] != 'c')
-        return "";
-      int y = stoi(i.substr(0, i.size() - 2));
-      if (i[i.size() - 2] == 'c' && i[i.size() - 1] == 'm')
-      {
-
-        if (y < 150 || y> 193)
-          return"";
-      }
-      else if (i[i.size() - 2] == 'i' && i[i.size() - 1] == 'n')
-
-      {
-        if (y < 59 || y> 76)
-          return"";
-      }
-
-    }
-
-    if (substr == "hcl")
-    {
-      if (i[0] != '#' || i.size() != 7)
+      // hgt(Height) - a number followed by either cm or in:
+      //        If cm, the number must be at least 150 and at most 193.
+      //        If in, the number must be at least 59 and at most 76.
+      if (value.size() < 4)
       {
         return "";
       }
-      for (x = 1; x < i.size(); x++)
-      {
-        char ch = i[x];
-        bool a = (ch >= '0' && ch <= '9');
-        if (!a && !(ch >= 'a' && ch <= 'f'))
-          return "";
-      }
-    }
+      for_each(value.begin(), value.end() - 2, [](char ch) { if (!isdigit(ch)) return ""; });
 
-    if (substr == "ecl")
-    {
-      if (i != "amb" && i != "blu" && i != "brn" && i != "gry" && i != "grn" && i != "hzl" && i != "oth")
-        return"";
-    }
-    if (substr == "pid")
-    {
-      if (i.size() != 9)
-        return"";
-      for (x = 0; x < i.size(); x++)
+      string unit = value.substr(value.length() - 2, 2);
+      if (unit != "cm" && unit != "in")
       {
-        if (!(i[x] >= '0' && i[x] <= '9'))
-          return "";
+        return "";
       }
 
-    }
+      int height = stoi(value.substr(0, value.size() - 2));
+      if (unit == "cm" && height >= 150 && height <= 193 ||
+        unit == "in" && height >= 59 && height <= 76)
+      {
+        return value;
+      }
 
-    return i;
+      return "";
+    }
+    else if (fieldName == HCL)
+    {
+      // hcl (Hair Color) - a # followed by exactly six characters 0-9 or a-f.
+      if (value[0] != '#' || value.size() != 7)
+      {
+        return "";
+      }
+
+      for (int i = 1; i < value.size(); i++)
+      {
+        char ch = value[i];
+        if (!isdigit(ch) && !(ch >= 'a' && ch <= 'f'))
+        {
+          return "";
+        }
+        return value;
+      }
+    }
+    else if (fieldName == ECL)
+    {
+      //ecl (Eye Color) - exactly one of: amb blu brn gry grn hzl oth.
+      if (value != "amb" && value != "blu" && value != "brn" && value != "gry" && value != "grn" && value != "hzl" && value != "oth")
+      {
+        return "";
+      }
+      return value;
+    }
+    else if (fieldName == PID)
+    {
+      // pid(Passport ID) - a nine - digit number, including leading zeroes.
+      if (value.size() != 9)
+      {
+        return "";
+      }
+      for_each(value.begin(), value.end(), [](char ch) { if (!isdigit(ch)) return ""; });
+      return value;
+    }
+    return value;
   }
   else return "";
 }
@@ -136,42 +141,58 @@ int main()
   freopen("in.txt", "r", stdin);
   freopen("out.txt", "w", stdout);
 
-  vector<string> v;
-  string s;
-  passport p;
-  int solution = 0;
-  while (getline(cin, s))
+  string inputLine;
+  map<string, string> PassportPart1;
+  map<string, string> PassportPart2;
+  vector <string> passportFields = { BYR, IYR,EYR, HGT, HCL, ECL, PID, CID };
+
+  int solution1 = 0, solution2 = 0;
+  while (getline(cin, inputLine))
   {
-    if (s != "")
+    if (inputLine != "")
     {
-      s += " ";
+      inputLine += " ";
       bool valid = true;
-      if (p.byr == "") p.byr = myFind(s, "byr");
-      if (p.iyr == "") p.iyr = myFind(s, "iyr");
-      if (p.eyr == "") p.eyr = myFind(s, "eyr");
-      if (p.hgt == "") p.hgt = myFind(s, "hgt");
-      if (p.hcl == "") p.hcl = myFind(s, "hcl");
-      if (p.ecl == "") p.ecl = myFind(s, "ecl");
-      if (p.pid == "") p.pid = myFind(s, "pid");
-      if (p.cid == "") p.cid = myFind(s, "cid");
+      for (auto p : passportFields)
+      {
+        PassportPart1[p] = myFind1(PassportPart1[p], inputLine, p);
+        PassportPart2[p] = myFind2(PassportPart2[p], inputLine, p);
+      }
     }
     else
     {
-      passport newPassport;
+      bool isValid1 = true, isValid2 = true;
 
-      if (p.byr == "" || p.iyr == "" || p.eyr == "" || p.hgt == "" ||
-        p.hcl == "" || p.ecl == "" || p.pid == "" /*|| p.cid == ""*/)
+      for (auto field : passportFields)
       {
-        //it's invalid
+        if (field != CID)
+        {
+          if (PassportPart1[field] == "")
+          {
+            isValid1 = false;
+          }
+          if (PassportPart2[field] == "")
+          {
+            isValid2 = false;
+          }
+        }
       }
-      else
-        solution++;
-      p = newPassport;
-    }
 
+      if (isValid1)
+      {
+        solution1++;
+      }
+      if (isValid2)
+      {
+        solution2++;
+      }
+      PassportPart1.clear();
+      PassportPart2.clear();
+    }
   }
 
-  cout << solution;
+  cout << "Part 1: " << solution1 << endl;
+  cout << "Part 2: " << solution2 << endl;
 
   return 0;
 }
