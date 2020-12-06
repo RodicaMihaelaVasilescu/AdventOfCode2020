@@ -13,18 +13,18 @@ int main()
   freopen("in.txt", "r", stdin);
   freopen("out.txt", "w", stdout);
 
-  string s;
-  set<char> allQuestions; 
-  map<char, int> questionsFrequencyPerGroup; 
+  string inputLine;
+  set<char> allQuestions;
+  map<char, int> questionsFrequencyPerGroup;
   int numberOfAllQuestions = 0;
   int numberOfAllQuestionsPerGroup = 0;
   int numberOfAllAnsweredQuestions = 0;
-  
-  while (getline(cin, s))
+
+  while (getline(cin, inputLine))
   {
-    if (s != "")
+    if (inputLine != "")
     {
-      for (char c : s)
+      for (char c : inputLine)
       {
         allQuestions.insert(c);
         questionsFrequencyPerGroup[c]++;
