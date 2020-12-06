@@ -68,7 +68,6 @@ namespace AdventProject
 
       Console.WriteLine("Part 1: " + numberOfAllQuestions);
       Console.WriteLine("Part 2: " + numberOfAllAnsweredQuestions);
-
     }
   }
 }

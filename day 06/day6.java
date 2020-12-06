@@ -5,9 +5,7 @@ import java.io.IOException;
 import java.util.*;
 
 public class AdventOfCode {
-
 	
-
 	public static void main(String[] args) throws IOException {
 
 		File file = new File("D:\\Java\\AdventOfCode\\in.txt");
