@@ -13,15 +13,15 @@ int main()
   vector <int> jolts;
   jolts.push_back(0);
 
-  int adapter, Max = 0;
+  int adapter, MaxAdapter = 0;
 
   while (cin >> adapter)
   {
-    Max = max(Max, adapter);
+    MaxAdapter = max(MaxAdapter, adapter);
     jolts.push_back(adapter);
   }
 
-  jolts.push_back(Max + 3);
+  jolts.push_back(MaxAdapter + 3);
   sort(jolts.begin(), jolts.end());
 
   int oneJoltDiff = 0, threeJoltsDiff = 0;
@@ -36,7 +36,7 @@ int main()
       threeJoltsDiff++;
     }
   }
-  
+
   cout << "Part 1: " << oneJoltDiff * threeJoltsDiff << endl;
 
   jolts.push_back(jolts[jolts.size() - 1] + 3);
@@ -52,5 +52,6 @@ int main()
       numberOfDistinctWays[j] += numberOfDistinctWays[i];
     }
   }
+
   cout << "Part 2: " << numberOfDistinctWays[jolts.size() - 1] << endl;
 }
