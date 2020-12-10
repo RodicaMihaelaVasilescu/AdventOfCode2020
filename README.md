@@ -2,16 +2,16 @@
 
 [Advent of code](https://adventofcode.com/)
 
-##### --- Day 1: Report Repair ---
-##### --- Day 2: Password Philosophy ---
-##### --- Day 3: Toboggan Trajectory ---
-##### --- Day 4: Passport Processing ---
-##### --- Day 5: Binary Boarding ---
-##### --- Day 6: Custom Customs ---
-##### --- Day 7: Handy Haversacks ---
-##### --- Day 8: Handheld Halting ---
-##### --- Day 9: Encoding Error ---
-##### --- Day 10: Adapter Array ---
+##### [--- Day 1: Report Repair ---](https://adventofcode.com/2020/day/1)
+##### [--- Day 2: Password Philosophy ---](https://adventofcode.com/2020/day/2)
+##### [--- Day 3: Toboggan Trajectory ---](https://adventofcode.com/2020/day/3)
+##### [--- Day 4: Passport Processing ---](https://adventofcode.com/2020/day/4)
+##### [--- Day 5: Binary Boarding ---](https://adventofcode.com/2020/day/5)
+##### [--- Day 6: Custom Customs ---](https://adventofcode.com/2020/day/6)
+##### [--- Day 7: Handy Haversacks ---](https://adventofcode.com/2020/day/7)
+##### [--- Day 8: Handheld Halting ---](https://adventofcode.com/2020/day/8)
+##### [--- Day 9: Encoding Error ---](https://adventofcode.com/2020/day/9)
+##### [--- Day 10: Adapter Array ---](https://adventofcode.com/2020/day/10)
 ##### --- Day 11:
 ##### --- Day 12:
 ##### --- Day 13:
