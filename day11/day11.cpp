@@ -114,7 +114,6 @@ int main()
           neighborsFrequecy[previousSeats[line][column]]++;
         }
         //If a seat is empty (L) and there are no occupied seats adjacent to it, the seat becomes occupied.
-
         if (previousSeats[i][j] == 'L' && neighborsFrequecy['#'] == 0)
         {
           seats[i][j] = '#';
