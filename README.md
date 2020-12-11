@@ -10,7 +10,7 @@
 ##### [--- Day 8: Handheld Halting ---](https://adventofcode.com/2020/day/8)
 ##### [--- Day 9: Encoding Error ---](https://adventofcode.com/2020/day/9)
 ##### [--- Day 10: Adapter Array ---](https://adventofcode.com/2020/day/10)
-##### --- Day 11:
+##### [--- Day 11: Seating System ---](https://adventofcode.com/2020/day/11)
 ##### --- Day 12:
 ##### --- Day 13:
 ##### --- Day 14:
