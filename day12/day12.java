@@ -25,16 +25,7 @@ public class AdventOfCode {
 		CharToInt.put('E', 0);
 		CharToInt.put('S', 1);
 		CharToInt.put('W', 2);
-		CharToInt.put('N', 3);
-
-		        		   
-		//         			N(-)
-		//         			^
-		//         			|
-		//		  (-) W <---+---> E (+)
-		//         			|
-		//         			v
-		//         			S(+)       		   
+		CharToInt.put('N', 3);		   
 		
 		File file = new File("D:\\Java\\AdventOfCode\\in.txt");
 		Scanner cin = new Scanner(file);

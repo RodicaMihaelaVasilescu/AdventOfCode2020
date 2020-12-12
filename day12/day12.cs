@@ -26,17 +26,6 @@ namespace AdventProject
       //            E  S  W  N  
       int[] lin = { 0, 1, 0, -1 };
       int[] col = { 1, 0, -1, 0 };
-      /*
-        		   (-)
-          			N
-          			^
-          			|
-		   (-) W <---+---> E (+)
-          			|
-          			v
-          			S
-         		   (+)
-		*/
 
       Dictionary<char, int> CharToInt = new Dictionary<char, int> { { 'E', 0 }, { 'S', 1 }, { 'W', 2 }, { 'N', 3 } };
 
