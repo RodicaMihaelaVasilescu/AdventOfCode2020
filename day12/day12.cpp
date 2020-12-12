@@ -1,76 +1,100 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
-#include <vector>
 #include <string>
 #include <map>
-#include <set>
 #include <algorithm>
 
 using namespace std;
-//             0  1  2  3
-//             N  S  E  W                          
-int lin[] = { -1, 1, 0, 0 };
-int col[] = { 0,  0, 1, -1 };
+
+//            0  1  2  3
+//            E  S  W  N                          
+int lin[] = { 0, 1, 0,-1 };
+int col[] = { 1, 0,-1, 0 };
+
+map<char, int> CharToInt{ {'E',0}, {'S',1}, {'W',2}, {'N',3} };
+
+/*
+           (-)
+            N
+            ^
+            |
+  (-) W <---+---> E (+)
+            |
+            v
+            S
+           (+)
+*/
+
 int main()
 {
   freopen("in.txt", "r", stdin);
   freopen("out.txt", "w", stdout);
 
+  //The ship starts by facing east
+  int direction = CharToInt['E'];
+
+  pair<int, int> point1, point2;
+
+  // the waypoint starts 1 unit north (-) and 10 units east (+)
+  pair<int, int> waypoint(-1, 10);
+
   char s;
   int n;
-
-  int i = 0, j = 0;
-  int north_south = -1;
-  int east_west = 10;
-
   while (cin >> s >> n)
   {
     if (s == 'F')
     {
-      i += n * north_south;
-      j += n * east_west;
+      //---------------- 1st part -------------------
+      point1.first += n * lin[direction];
+      point1.second += n * col[direction];
+      //---------------- 2nd part -------------------
+      point2.first += n * waypoint.first;
+      point2.second += n * waypoint.second;
     }
-    else
-      if (s == 'N')
+    else if (s == 'E' || s == 'S' || s == 'W' || s == 'N')
+    {
+      //---------------- 1st part -------------------
+      point1.first += n * lin[CharToInt[s]];
+      point1.second += n * col[CharToInt[s]];
+      //---------------- 2nd part -------------------
+      waypoint.first += n * lin[CharToInt[s]];
+      waypoint.second += n * col[CharToInt[s]];
+    }
+    // right rotation
+    else  if (s == 'R' && n == 90 || s == 'L' && n == 270)
+    {
+      //---------------- 1st part -------------------
+      ++direction %= 4;
+      //---------------- 2nd part -------------------
+      waypoint.first *= -1;
+      swap(waypoint.first, waypoint.second);
+    }
+    // left rotation
+    else if (s == 'L' && n == 90 || s == 'R' && n == 270)
+    {
+      //---------------- 1st part -------------------
+      if (--direction < 0)
       {
-        north_south -= n;
+        direction = 3;
       }
-      else if (s == 'S')
-      {
-        north_south += n;
-      }
-      else if (s == 'E')
-      {
-        east_west += n;
-      }
-      else if (s == 'W')
-      {
-        east_west -= n;
-      }
-      else
-      {
-        if (s == 'R' && n == 90 || s == 'L' && n == 270)
-        {
-          north_south *= -1;
-          swap(north_south, east_west);
-
-        }
-        else if (s == 'R' && n == 270 || s == 'L' && n == 90)
-        {
-          east_west *= -1;
-          swap(north_south, east_west);
-
-        }
-        else if (s == 'R' && n == 180 || s == 'L' && n == 180)
-        {
-          // Obs: when it's 180 degree rotation, the north and east directions will have the opposite sign
-          north_south *= -1;
-          east_west *= -1;
-        }
-      }
+      //---------------- 2nd part -------------------
+      waypoint.second *= -1;
+      swap(waypoint.first, waypoint.second);
+    }
+    // 180 rotation
+    else if (s == 'R' && n == 180 || s == 'L' && n == 180)
+    {
+      //---------------- 1st part -------------------
+      direction += 2;
+      direction %= 4;
+      //---------------- 2nd part -------------------
+      waypoint.first *= -1;
+      waypoint.second *= -1;
+    }
   }
-  cout << "Part 2: " << abs(i) + abs(j) << endl;
 
+  cout << "Part 1: " << abs(point1.first) + abs(point1.second) << endl;
+  cout << "Part 2: " << abs(point2.first) + abs(point2.second) << endl;
 
   return 0;
 }
