@@ -24,10 +24,8 @@ MyTuple euclid(MyLongLong  a, MyLongLong  b) {
     t = euclid(b % a, a);
     swap(t.Y, t.Z);
     t.Y = t.Y - ((b / a)) * t.Z;
-
     return t;
   }
-
 }
 
 MyLongLong euclidModulo(MyLongLong a, MyLongLong b)
