@@ -41,7 +41,7 @@ MyLongLong euclidModulo(MyLongLong a, MyLongLong b)
 }
 
 
-MyLongLong ChineseRemaindersTheorem(vector<MyLongLong > busID, vector<MyLongLong > time)
+MyLongLong ChineseRemainderTheorem(vector<MyLongLong > busID, vector<MyLongLong > time)
 {
   while (true) {
 
@@ -64,7 +64,7 @@ MyLongLong ChineseRemaindersTheorem(vector<MyLongLong > busID, vector<MyLongLong
   return  time[0];
 }
 
-int main(void)
+int main()
 {
   freopen("in.txt", "r", stdin);
   freopen("out.txt", "w", stdout);
@@ -72,6 +72,6 @@ int main(void)
   vector<MyLongLong > numbers = { 29, 41, 521, 23, 13, 17, 601, 37, 19 };
   vector<MyLongLong > time = { 29, 22, 492, -14, -29, -29, 541, -29, -60 };
 
-  cout << "Part 2: " << ChineseRemaindersTheorem(numbers, time);
+  cout << "Part 2: " << ChineseRemainderTheorem(numbers, time);
   return 0;
 }
