@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <map>
 #include "MyLongLong.h"
 
 using namespace std;
@@ -69,9 +70,45 @@ int main()
   freopen("in.txt", "r", stdin);
   freopen("out.txt", "w", stdout);
 
-  vector<MyLongLong > numbers = { 29, 41, 521, 23, 13, 17, 601, 37, 19 };
-  vector<MyLongLong > time = { 29, 22, 492, -14, -29, -29, 541, -29, -60 };
+  int initialTimestamp;
+  cin >> initialTimestamp;
+  string  line;
+  cin >> line;
+  vector<MyLongLong> buses, time;
+  line += ",";
+  int it1 = line.find(',');
+  int it2 = 0;
+  int index = 0;
+  while (it1 != string::npos)
+  {
+    string stringID = line.substr(it2, it1 - it2);
+    if (stringID != "x")
+    {
+      int intID = stoi(stringID);
+      buses.push_back(intID);
+      time.push_back(intID - index);
+    }
+    index++;
+    it2 = it1 + 1;
+    it1 = line.find(',', it1 + 1);
+  }
 
-  cout << "Part 2: " << ChineseRemainderTheorem(numbers, time);
+  int timestamp = initialTimestamp;
+  bool found = false;
+  while (!found)
+  {
+    for (auto busID : buses)
+    {
+      if (initialTimestamp % busID.toInt() == 0)
+      {
+        cout << "Part 1: " << (initialTimestamp - timestamp) * busID.toInt() << endl;
+        found = true;
+        break;
+      }
+    }
+    initialTimestamp++;
+  }
+
+  cout << "Part 2: " << ChineseRemainderTheorem(buses, time);
   return 0;
 }
