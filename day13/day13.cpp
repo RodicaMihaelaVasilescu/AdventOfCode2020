@@ -60,7 +60,6 @@ MyLongLong ChineseRemainderTheorem(vector<MyLongLong > busID, vector<MyLongLong 
     {
       break;
     }
-
   }
   return  time[0];
 }
