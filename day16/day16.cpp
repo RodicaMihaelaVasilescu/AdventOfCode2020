@@ -8,14 +8,15 @@
 
 using namespace std;
 
-struct betweenRange
+struct ranges
 {
-  int i, j, i2, j2;
+  // a, b - first range; x, y - second range
+  int a, b, x, y;
 
 };
-bool isValid(int x, betweenRange r)
+bool isNumberBetweenRanges(int number, ranges range)
 {
-  return x >= r.i && x <= r.j || x >= r.i2 && x <= r.j2;
+  return number >= range.a && number <= range.b || number >= range.x && number <= range.y;
 }
 int main()
 {
@@ -24,51 +25,54 @@ int main()
 
 
   string inputLine;
-  map <string, betweenRange> fieldsAndRanges;
-  vector <string> fields;
+  map <string, ranges> fieldsAndRanges;
+  vector <string> fieldNames;
 
   getline(cin, inputLine);
 
   while (inputLine != "")
   {
     int i = inputLine.find(':');
+
     string field = inputLine.substr(0, i);
-    fields.push_back(field);
-    betweenRange b;
+    fieldNames.push_back(field);
+
+    ranges range;
     int j = i + 2;
 
     i = inputLine.find('-', j);
-    string x = inputLine.substr(j, i - j);
-    b.i = stoi(inputLine.substr(j, i - j));
+    range.a = stoi(inputLine.substr(j, i - j));
 
     j = i + 1;
     i = inputLine.find(' ', j);
-    b.j = stoi(inputLine.substr(j, i - j));
+    range.b = stoi(inputLine.substr(j, i - j));
 
     j = i + 4;
     i = inputLine.find('-', j);
-    b.i2 = stoi(inputLine.substr(j, i - j));
+    range.x = stoi(inputLine.substr(j, i - j));
 
     j = i + 1;
-    b.j2 = stoi(inputLine.substr(j, inputLine.size() - j));
+    range.y = stoi(inputLine.substr(j, inputLine.size() - j));
 
-    fieldsAndRanges[field] = b;
+    fieldsAndRanges[field] = range;
 
     getline(cin, inputLine);
   }
 
   map < string, int> yourTicket;
   getline(cin, inputLine);
+
+  // reading the ticket
   if (inputLine == "your ticket:")
   {
     getline(cin, inputLine);
     inputLine += ',';
+
     int j = 0;
     int i = inputLine.find(',', j);
-    string x = inputLine.substr(j, i - j);
-    int index = 0;
+    int fieldIndex = 0;
     while (i != string::npos) {
-      yourTicket[fields[index++]] = stoi(inputLine.substr(j, i - j));
+      yourTicket[fieldNames[fieldIndex++]] = stoi(inputLine.substr(j, i - j));
       j = i + 1;
       i = inputLine.find(',', j);
     }
@@ -77,16 +81,18 @@ int main()
 
   vector < map<string, int>> nearbyTickets;
   getline(cin, inputLine);
+
+  // reading nearby tickets
   if (inputLine == "nearby tickets:") {
     while (getline(cin, inputLine)) {
       inputLine += ',';
       int j = 0;
       int i = inputLine.find(',', j);
-      string x = inputLine.substr(j, i - j);
       int index = 0;
+
       map<string, int> nearbyTicketFields;
       while (i != string::npos) {
-        nearbyTicketFields[fields[index++]] = stoi(inputLine.substr(j, i - j));
+        nearbyTicketFields[fieldNames[index++]] = stoi(inputLine.substr(j, i - j));
         j = i + 1;
         i = inputLine.find(',', j);
       }
@@ -94,8 +100,9 @@ int main()
     }
   }
 
-  int sum = 0;
+  int numberOfInvalidTickets = 0;
   set<map<string, int>> invalidTickets;
+
   for (map<string, int> ticket : nearbyTickets)
   {
     for (auto ticketValue : ticket)
@@ -103,29 +110,104 @@ int main()
       bool valid = false;
       for (auto range : fieldsAndRanges)
       {
-        if (isValid(ticketValue.second, range.second))
+        if (isNumberBetweenRanges(ticketValue.second, range.second))
         {
           valid = true;
         }
       }
       if (!valid)
       {
-        sum += ticketValue.second;
+        numberOfInvalidTickets += ticketValue.second;
         invalidTickets.insert(ticket);
       }
     }
-
   }
 
   set<map<string, int>> validTickets;
-  for (auto i : nearbyTickets)
+  for (auto ticket : nearbyTickets)
   {
-    if (invalidTickets.find(i) == invalidTickets.end())
+    if (invalidTickets.find(ticket) == invalidTickets.end())
     {
-      validTickets.insert(i);
+      validTickets.insert(ticket);
     }
   }
 
-  cout << sum;
+  map<string, set<string>> possibleMappings;
+  map<string, string> finalMapping;
+  set<string> usedKeys, usedValues; // used field name, used mapping value for the field name
 
+  for (auto fieldName : fieldNames)
+  {
+    for (auto anotherFieldName : fieldNames)
+    {
+      bool isMappingValid = true;
+      for (auto ticket : validTickets)
+      {
+        int  ticketValue = ticket[fieldName];
+        auto ranges = fieldsAndRanges[anotherFieldName];
+        // for each ticket check if it's field can be map to another field
+        if (!isNumberBetweenRanges(ticketValue, ranges))
+        {
+          isMappingValid = false;
+          break;
+        }
+      }
+      if (isMappingValid)
+      {
+        // the mapping is valid
+        possibleMappings[fieldName].insert(anotherFieldName);
+      }
+    }
+  }
+
+  while (!possibleMappings.empty())
+  {
+    set<string> toRemove;
+    for (auto field : fieldNames)
+    {
+      // if there's only one mapping for a field
+      if (possibleMappings[field].size() == 1)
+      {
+        finalMapping[field] = *possibleMappings[field].begin();
+        // the mapping will be a final mapping and will be removed from the possible mappings
+        toRemove.insert(*possibleMappings[field].begin());
+      }
+      else
+      {
+        // if there's no mapping left for a field, the mapping will be removed from the possible mappings
+        if (possibleMappings[field].empty())
+        {
+          possibleMappings.erase(field);
+        }
+      }
+    }
+
+
+    for (auto mapping : finalMapping)
+    {
+      possibleMappings.erase(mapping.first);
+    }
+
+    for (auto& mapping : possibleMappings)
+    {
+      for (auto removed : toRemove)
+      {
+        mapping.second.erase(removed);
+      }
+    }
+  }
+
+  unsigned long long multiplication = 1;
+  for (auto field : fieldNames)
+  {
+    if (finalMapping[field].find("departure") != string::npos)
+    {
+      multiplication *= yourTicket[field];
+    }
+  }
+
+  cout << "Part 1: " << numberOfInvalidTickets << endl;
+  cout << "Part 2: " << multiplication << endl;
+
+  return 0;
 }
