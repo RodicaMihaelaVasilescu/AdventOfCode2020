@@ -23,6 +23,7 @@ int main()
   string element;
   bool isIngredient = true;
   bool isFirstIngredient = true;
+
   while (cin >> element)
   {
     if (element == "(contains")
@@ -40,7 +41,7 @@ int main()
     }
     else if (element[element.size() - 1] == ',' || element[element.size() - 1] == ')')
     {
-      allergensSet.insert(element);
+      allergensSet.insert(element.substr(0, element.size() - 1));
 
       if (element[element.size() - 1] == ')')
       {
@@ -52,9 +53,9 @@ int main()
           }
           else
           {
-            //get common from Allergen_PossibleIngredients[a] and VectorOfIngredients;
+            //get common from allergen_possibleMappings[allergen] and ingredientsSet;
             set<string> possibleIngredients = allergen_possibleMappings[allergen];
-            set<string>  commonIngredients;
+            set<string> commonIngredients;
 
             for (auto ingredient : possibleIngredients)
             {
@@ -66,7 +67,6 @@ int main()
             allergen_possibleMappings[allergen] = commonIngredients;
           }
         }
-
         ingredientsSet.clear();
         allergensSet.clear();
         isFirstIngredient = true;
@@ -76,44 +76,46 @@ int main()
 
   }
 
-  map<string, string> allergent_ingredient;
-  map<string, string> ingredient_allergent;
+  map<string, string> allergen_ingredient;
+  map<string, string> ingredient_allergen;
   while (!allergen_possibleMappings.empty())
   {
     vector <string> toRemove;
-    for (auto allergentMapping : allergen_possibleMappings)
+    for (auto allergenMapping : allergen_possibleMappings)
     {
       //there's only one possible mapping of allergent with ingredient
-      if (allergentMapping.second.size() == 1)
+      if (allergenMapping.second.size() == 1)
       {
-        auto allergent = allergentMapping.first;
-        auto ingredient = *allergentMapping.second.begin();
+        auto allergen = allergenMapping.first;
+        auto ingredient = *allergenMapping.second.begin();
 
-        allergent_ingredient[allergent] = ingredient;
-        ingredient_allergent[ingredient] = allergent;
-        toRemove.push_back(allergent);
+        allergen_ingredient[allergen] = ingredient;
+        ingredient_allergen[ingredient] = allergen;
+        toRemove.push_back(allergen);
       }
-      if (allergentMapping.second.size() == 0)
+      if (allergenMapping.second.size() == 0)
       {
-        toRemove.push_back(allergentMapping.first);
+        toRemove.push_back(allergenMapping.first);
       }
     }
 
-    for (auto i : toRemove)
+    for (auto allergenToRemove : toRemove)
     {
-      allergen_possibleMappings.erase(i);
+      allergen_possibleMappings.erase(allergenToRemove);
     }
-    for (auto& i : allergen_possibleMappings)
+    for (auto& allergenToRemove : allergen_possibleMappings)
     {
       for (auto j : toRemove)
-        i.second.erase(allergent_ingredient[j]);
+      {
+        allergenToRemove.second.erase(allergen_ingredient[j]);
+      }
     }
   }
 
   int solutionPart1 = 0;
   for (auto ingredient : allIngredients)
   {
-    if (ingredient_allergent[ingredient] == "")
+    if (ingredient_allergen[ingredient] == "")
     {
       solutionPart1++;
     }
@@ -121,11 +123,11 @@ int main()
   cout << "Part 1: " << solutionPart1 << endl;
 
   string solutionPart2;
-  for (auto m : allergent_ingredient)
+  for (auto m : allergen_ingredient)
   {
     solutionPart2 += m.second + ",";
   }
-  cout << "Part 2: " << solutionPart2.substr(0, solutionPart2.size() - 1) << endl;
 
+  cout << "Part 2: " << solutionPart2.substr(0, solutionPart2.size() - 1) << endl;
   return 0;
 }
