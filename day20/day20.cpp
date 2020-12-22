@@ -8,22 +8,15 @@
 #include <algorithm>
 
 using namespace std;
-struct link {
-  int tileID;
-  int ToplinkedToTile;
-  int bottomLinkedToTile;
-  int rightLinkedToTile;
-  int leftLinkedToTile;
-};
 
-vector<string>finalMatrix;
+vector<string> finalMatrix;
 
-struct Tile {
+struct Tile
+{
   int ID;
   vector<string> borders;
-  vector<int>isLinked = vector<int>(4, 0);
-  vector<int>linkedToTile = vector<int>(4, 0);
   vector<string> Map;
+  vector<int>isLinked = vector<int>(4, 0);
 };
 
 bool operator==(const Tile& a, const Tile& b)
@@ -197,8 +190,7 @@ void SearchTilesToRight(Tile currentTile, vector<Tile> allTiles)
         string reversedNextBorder = nextBorder;
         reverse(reversedNextBorder.begin(), reversedNextBorder.end());
 
-        if (border == nextBorder || border == reversedNextBorder ||
-          reversedBorder == nextBorder || reversedBorder == reversedNextBorder)
+        if (border == nextBorder || border == reversedNextBorder)
         {
           foundNextRight = true;
           currentTile = tile;
@@ -257,7 +249,7 @@ void SearchTilesDown(Tile currentTile, vector<Tile> allTiles)
       {
         string reversedNextBorder = nextBorder;
         reverse(reversedNextBorder.begin(), reversedNextBorder.end());
-        if (border == nextBorder || border == reversedNextBorder || reversedBorder == nextBorder || reversedBorder == reversedNextBorder)
+        if (border == nextBorder || border == reversedNextBorder)
         {
           foundNextDown = true;
           currentTile = tile;
@@ -320,16 +312,13 @@ int main()
     allTiles.push_back(tile);
   }
 
-
-  link tile;
-  tile.tileID = tileID;
-
-  int nr = allTiles.size();
   vector<Tile> usedInTheQueueOfTiles;
   queue<Tile> queueOfTiles;
-  Tile currentTile = allTiles[0];
-  queueOfTiles.push(currentTile);
+  queueOfTiles.push(allTiles[0]);
+
+  Tile currentTile = queueOfTiles.front();
   usedInTheQueueOfTiles.push_back(currentTile);
+
   vector<Tile> linkedTiles;
   while (!queueOfTiles.empty())
   {
@@ -370,8 +359,6 @@ int main()
             }
             currentTile.isLinked[i] = 1;
             tile.isLinked[j] = 1;
-            currentTile.linkedToTile[i] = tile.ID;
-            tile.linkedToTile[j] = currentTile.ID;
             if (find(usedInTheQueueOfTiles.begin(), usedInTheQueueOfTiles.end(), tile) == usedInTheQueueOfTiles.end())
             {
               queueOfTiles.push(tile);
@@ -400,39 +387,34 @@ int main()
 
   cout << "Part 1: " << solutionPart1 << endl;
 
-  for (auto c : corners)
+  for (auto corner : corners)
   {
-    // top left corner
-    if (c.isLinked[0] == 0 && c.isLinked[2] == 0)
+    if (corner.isLinked[0] == 0 && corner.isLinked[2] == 0)
     {
-      currentTile = c;
+      currentTile = corner; // top left corner
     }
   }
 
   SearchTilesDown(currentTile, linkedTiles);
 
+  //rotatong the map until it has sea monsters
+  finalMatrix = rotateRight(finalMatrix);
+  finalMatrix = flipMatrix(finalMatrix);
   finalMatrix = rotateRight(finalMatrix);
   finalMatrix = rotateRight(finalMatrix);
-
-  for (auto i : finalMatrix)
-    cout << i << endl;
 
   int count = 0;
   for (auto i : finalMatrix)
+  {
+    cout << i << endl;
     for (auto j : i)
     {
       if (j == '#')
         count++;
     }
+  }
 
   cout << "Number of #: " << count << endl;
-
-  finalMatrix = rotateRight(finalMatrix);
-  finalMatrix = rotateRight(finalMatrix);
-  finalMatrix = rotateRight(finalMatrix);
-  finalMatrix = flipMatrix(finalMatrix);
-  finalMatrix = rotateRight(finalMatrix);
-  finalMatrix = rotateRight(finalMatrix);
 
   int numberOfSeaMonsters = 0;
   auto matrixWithSeaMonsters = finalMatrix;
@@ -481,7 +463,6 @@ int main()
       }
     }
   }
-
 
   int solutionPart2 = 0;
   for (auto i : matrixWithSeaMonsters)
