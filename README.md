@@ -16,7 +16,7 @@
 ##### [--- Day 14: Docking Data ---](https://adventofcode.com/2020/day/14) [(click here for my solution)](https://github.com/RodicaMihaelaVasilescu/AdventOfCode2020/blob/main/day14/day14.cpp)
 ##### [--- Day 15: Rambunctious Recitation ---](https://adventofcode.com/2020/day/15) [(click here for my solution)](https://github.com/RodicaMihaelaVasilescu/AdventOfCode2020/blob/main/day15/day15.cpp)
 ##### [--- Day 16: Ticket Translation ---](https://adventofcode.com/2020/day/16) [(click here for my solution)](https://github.com/RodicaMihaelaVasilescu/AdventOfCode2020/blob/main/day16/day16.cpp)
-##### [--- Day 17: Conway Cubes ---](https://adventofcode.com/2020/day/17) [(click here for my solution)](https://github.com/RodicaMihaelaVasilescu/AdventOfCode2020/blob/main/day17/day17.cpp)
+##### [--- Day 17: Conway Cubes ---](https://adventofcode.com/2020/day/17) [(click here for my solution)](https://github.com/RodicaMihaelaVasilescu/AdventOfCode2020/blob/main/day17/part2.cpp)
 ##### [--- Day 18: Operation Order ---](https://adventofcode.com/2020/day/18) [(click here for my solution)](https://github.com/RodicaMihaelaVasilescu/AdventOfCode2020/blob/main/day18/day18.cpp)
 ##### [--- Day 19: Monster Messages ---](https://adventofcode.com/2020/day/19) [(click here for my solution)](https://github.com/RodicaMihaelaVasilescu/AdventOfCode2020/blob/main/day19/day19.cpp)
 ##### [--- Day 20: Jurassic Jigsaw ---](https://adventofcode.com/2020/day/20) [(click here for my solution)](https://github.com/RodicaMihaelaVasilescu/AdventOfCode2020/blob/main/day20/day20.cpp)
