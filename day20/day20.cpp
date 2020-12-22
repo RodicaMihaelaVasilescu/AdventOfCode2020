@@ -1,3 +1,5 @@
+// warning: please make sure you kept the last empty line from the input
+
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <string>
@@ -260,6 +262,78 @@ void SearchTilesDown(Tile currentTile, vector<Tile> allTiles)
   }
 }
 
+int getMatrixWithSeaMonsters(vector<string> matrix) {
+  int numberOfSeaMonsters = 0;
+  auto matrixWithSeaMonsters = finalMatrix;
+  /*
+    01234567891123456789
+              0123456789
+
+                      #
+    #    ##    ##    ###
+     #  #  #  #  #  #
+*/
+  for (int i = 0; i < finalMatrix[0].size() - 2; i++)
+  {
+    for (int j = 0; j < finalMatrix.size() - 19; j++)
+    {
+      if (j + 19 <= finalMatrix.size() && i + 2 <= finalMatrix.size() &&
+        finalMatrix[i][j + 18] == '#' &&
+
+        finalMatrix[i + 1][j] == '#' && finalMatrix[i + 1][j + 5] == '#' && finalMatrix[i + 1][j + 6] == '#' &&
+        finalMatrix[i + 1][j + 11] == '#' && finalMatrix[i + 1][j + 12] == '#' &&
+        finalMatrix[i + 1][j + 17] == '#' && finalMatrix[i + 1][j + 18] == '#' && finalMatrix[i + 1][j + 19] == '#' &&
+
+        finalMatrix[i + 2][j + 1] == '#' && finalMatrix[i + 2][j + 4] == '#' && finalMatrix[i + 2][j + 7] == '#' &&
+        finalMatrix[i + 2][j + 10] == '#' && finalMatrix[i + 2][j + 13] == '#' && finalMatrix[i + 2][j + 16] == '#')
+      {
+        matrixWithSeaMonsters[i][j + 18] = 'O';
+
+        matrixWithSeaMonsters[i + 1][j] = 'O';
+        matrixWithSeaMonsters[i + 1][j + 5] = 'O';
+        matrixWithSeaMonsters[i + 1][j + 6] = 'O';
+
+        matrixWithSeaMonsters[i + 1][j + 11] = 'O';
+        matrixWithSeaMonsters[i + 1][j + 12] = 'O';
+        matrixWithSeaMonsters[i + 1][j + 17] = 'O';
+        matrixWithSeaMonsters[i + 1][j + 18] = 'O';
+        matrixWithSeaMonsters[i + 1][j + 19] = 'O';
+
+        matrixWithSeaMonsters[i + 2][j + 1] = 'O';
+        matrixWithSeaMonsters[i + 2][j + 4] = 'O';
+        matrixWithSeaMonsters[i + 2][j + 7] = 'O';
+
+        matrixWithSeaMonsters[i + 2][j + 10] = 'O';
+        matrixWithSeaMonsters[i + 2][j + 13] = 'O';
+        matrixWithSeaMonsters[i + 2][j + 16] = 'O';
+        numberOfSeaMonsters++;
+      }
+    }
+  }
+
+  if (numberOfSeaMonsters == 0)
+  {
+    return -1;
+  }
+  int solutionPart2 = 0;
+  for (auto i : matrixWithSeaMonsters)
+  {
+    for (auto j : i)
+    {
+      if (j == '#')
+        solutionPart2++;
+    }
+  }
+
+  cout << "\n\n\nSea monsters: \n";
+  for (auto i : matrixWithSeaMonsters)
+  {
+    cout << i << endl;
+  }
+  cout << "Number of sea monsters: " << numberOfSeaMonsters << endl;
+  return solutionPart2;
+}
+
 int main()
 {
   freopen("in.txt", "r", stdin);
@@ -397,12 +471,6 @@ int main()
 
   SearchTilesDown(currentTile, linkedTiles);
 
-  //rotatong the map until it has sea monsters
-  finalMatrix = rotateRight(finalMatrix);
-  finalMatrix = flipMatrix(finalMatrix);
-  finalMatrix = rotateRight(finalMatrix);
-  finalMatrix = rotateRight(finalMatrix);
-
   int count = 0;
   for (auto i : finalMatrix)
   {
@@ -414,73 +482,27 @@ int main()
     }
   }
 
+  int solutionPart2 = getMatrixWithSeaMonsters(finalMatrix);
+  int rotations = 0;
+  //rotatong the map until it has sea monsters
+  while (solutionPart2 == -1)
+  {
+    finalMatrix = rotateRight(finalMatrix);
+    rotations++;
+    if (rotations == 4)
+    {
+      finalMatrix = flipMatrix(finalMatrix);
+    }
+    else if (rotations > 10)
+    {
+      cout << "If this output is displayed, it means I have a bug :( \n";
+      cout << "Please let me know if you have this issue.";
+      return 0;
+    }
+    solutionPart2 = getMatrixWithSeaMonsters(finalMatrix);
+  }
+
   cout << "Number of #: " << count << endl;
-
-  int numberOfSeaMonsters = 0;
-  auto matrixWithSeaMonsters = finalMatrix;
-  /*
-    01234567891123456789
-              0123456789
-
-                      #
-    #    ##    ##    ###
-     #  #  #  #  #  #
-*/
-  for (int i = 0; i < finalMatrix[0].size() - 2; i++)
-  {
-    for (int j = 0; j < finalMatrix.size() - 19; j++)
-    {
-      if (j + 19 <= finalMatrix.size() && i + 2 <= finalMatrix.size() &&
-        finalMatrix[i][j + 18] == '#' &&
-
-        finalMatrix[i + 1][j] == '#' && finalMatrix[i + 1][j + 5] == '#' && finalMatrix[i + 1][j + 6] == '#' &&
-        finalMatrix[i + 1][j + 11] == '#' && finalMatrix[i + 1][j + 12] == '#' &&
-        finalMatrix[i + 1][j + 17] == '#' && finalMatrix[i + 1][j + 18] == '#' && finalMatrix[i + 1][j + 19] == '#' &&
-
-        finalMatrix[i + 2][j + 1] == '#' && finalMatrix[i + 2][j + 4] == '#' && finalMatrix[i + 2][j + 7] == '#' &&
-        finalMatrix[i + 2][j + 10] == '#' && finalMatrix[i + 2][j + 13] == '#' && finalMatrix[i + 2][j + 16] == '#')
-      {
-        matrixWithSeaMonsters[i][j + 18] = 'O';
-
-        matrixWithSeaMonsters[i + 1][j] = 'O';
-        matrixWithSeaMonsters[i + 1][j + 5] = 'O';
-        matrixWithSeaMonsters[i + 1][j + 6] = 'O';
-
-        matrixWithSeaMonsters[i + 1][j + 11] = 'O';
-        matrixWithSeaMonsters[i + 1][j + 12] = 'O';
-        matrixWithSeaMonsters[i + 1][j + 17] = 'O';
-        matrixWithSeaMonsters[i + 1][j + 18] = 'O';
-        matrixWithSeaMonsters[i + 1][j + 19] = 'O';
-
-        matrixWithSeaMonsters[i + 2][j + 1] = 'O';
-        matrixWithSeaMonsters[i + 2][j + 4] = 'O';
-        matrixWithSeaMonsters[i + 2][j + 7] = 'O';
-
-        matrixWithSeaMonsters[i + 2][j + 10] = 'O';
-        matrixWithSeaMonsters[i + 2][j + 13] = 'O';
-        matrixWithSeaMonsters[i + 2][j + 16] = 'O';
-        numberOfSeaMonsters++;
-      }
-    }
-  }
-
-  int solutionPart2 = 0;
-  for (auto i : matrixWithSeaMonsters)
-  {
-    for (auto j : i)
-    {
-      if (j == '#')
-        solutionPart2++;
-    }
-  }
-
-  cout << "\n\n\nSea monsters: \n";
-  for (auto i : matrixWithSeaMonsters)
-  {
-    cout << i << endl;
-  }
-
-  cout << "Number of sea monsters: " << numberOfSeaMonsters << endl;
   cout << "Part 2: " << solutionPart2 << endl;
   return 0;
 }
