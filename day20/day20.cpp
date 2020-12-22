@@ -481,6 +481,7 @@ int main()
         count++;
     }
   }
+  cout << "Number of #: " << count << endl;
 
   int solutionPart2 = getMatrixWithSeaMonsters(finalMatrix);
   int rotations = 0;
@@ -501,8 +502,6 @@ int main()
     }
     solutionPart2 = getMatrixWithSeaMonsters(finalMatrix);
   }
-
-  cout << "Number of #: " << count << endl;
   cout << "Part 2: " << solutionPart2 << endl;
   return 0;
 }
