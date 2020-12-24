@@ -23,7 +23,7 @@
 ##### [--- Day 21: Allergen Assessment ---     ](https://adventofcode.com/2020/day/21) [(click here for my solution)](https://github.com/RodicaMihaelaVasilescu/AdventOfCode2020/blob/main/day21/day21.cpp)
 ##### [--- Day 22: Crab Combat ---             ](https://adventofcode.com/2020/day/22) [(click here for my solution)](https://github.com/RodicaMihaelaVasilescu/AdventOfCode2020/blob/main/day22/day22.cpp)
 ##### [--- Day 23: Crab Cups ---               ](https://adventofcode.com/2020/day/23)[(click here for my solution)](https://github.com/RodicaMihaelaVasilescu/AdventOfCode2020/blob/main/day21/day23.cpp)
-##### [--- Day 24: Lobby Layout ---            ](https://adventofcode.com/2020/day/24)[(click here for my solution)](https://github.com/RodicaMihaelaVasilescu/AdventOfCode2020/blob/main/day21/day24.cpp)
+##### [--- Day 24: Lobby Layout ---            ](https://adventofcode.com/2020/day/24)[(click here for my solution)](https://github.com/RodicaMihaelaVasilescu/AdventOfCode2020/blob/main/day24/day24.cpp)
 ##### [--- Day 25: ---                         ](https://adventofcode.com/2020/day/25)[(click here for my solution)](https://github.com/RodicaMihaelaVasilescu/AdventOfCode2020/blob/main/day21/day25.cpp)
 
 ![alt text](AdventOfCode.png)
