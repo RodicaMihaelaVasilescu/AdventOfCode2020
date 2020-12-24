@@ -53,12 +53,12 @@ int main()
 
     tiles[{x, y}] = !tiles[{x, y}];
   }
-  int numberOfBlackFaces = accumulate(tiles.begin(), tiles.end(), 0,
+  int numberOfBlackTiles = accumulate(tiles.begin(), tiles.end(), 0,
     [](int value, const std::map<pair<double, double>, bool>::value_type& p)
     { return value + p.second; }
   );
 
-  cout << "Part 1: " << numberOfBlackFaces << endl;
+  cout << "Part 1: " << numberOfBlackTiles << endl;
 
   for (int index = 0; index < 100; index++)
   {
@@ -82,7 +82,7 @@ int main()
     tiles = nextTiles;
     for (auto tile : tiles)
     {
-      int blackNeghbours = 0;
+      int blackNeighbors = 0;
       for (int j = 0; j < 6; j++)
       {
         x = tile.first.first + lin[j];
@@ -91,23 +91,23 @@ int main()
         if (tiles.find({ x,y }) != tiles.end())
         {
           if (tiles[{x, y}] == BLACK)
-            blackNeghbours++;
+            blackNeighbors++;
         }
       }
-      if (tile.second == WHITE && blackNeghbours == 2)
+      if (tile.second == WHITE && blackNeighbors == 2)
       {
         nextTiles[tile.first] = BLACK;
-        numberOfBlackFaces++;
+        numberOfBlackTiles++;
       }
-      else  if (tile.second == BLACK && (blackNeghbours == 0 || blackNeghbours > 2))
+      else  if (tile.second == BLACK && (blackNeighbors == 0 || blackNeighbors > 2))
       {
         nextTiles[tile.first] = WHITE;
-        numberOfBlackFaces--;
+        numberOfBlackTiles--;
       }
     }
     tiles = nextTiles;
   }
 
-  cout << "Part 2: " << numberOfBlackFaces << endl;
+  cout << "Part 2: " << numberOfBlackTiles << endl;
   return 0;
 }
