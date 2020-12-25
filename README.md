@@ -24,6 +24,6 @@
 ##### [--- Day 22: Crab Combat ---             ](https://adventofcode.com/2020/day/22) [(click here for my solution)](https://github.com/RodicaMihaelaVasilescu/AdventOfCode2020/blob/main/day%2022/day22.cpp)
 ##### [--- Day 23: Crab Cups ---               ](https://adventofcode.com/2020/day/23) [(click here for my solution)](https://github.com/RodicaMihaelaVasilescu/AdventOfCode2020/blob/main/day%2023/day23.cpp)
 ##### [--- Day 24: Lobby Layout ---            ](https://adventofcode.com/2020/day/24) [(click here for my solution)](https://github.com/RodicaMihaelaVasilescu/AdventOfCode2020/blob/main/day%2024/day24.cpp)
-##### [--- Day 25: ---                         ](https://adventofcode.com/2020/day/25) [(click here for my solution)](https://github.com/RodicaMihaelaVasilescu/AdventOfCode2020/blob/main/day%2025/day25.cpp)
+##### [--- Day 25: Combo Breaker ---           ](https://adventofcode.com/2020/day/25) [(click here for my solution)](https://github.com/RodicaMihaelaVasilescu/AdventOfCode2020/blob/main/day%2025/day25.cpp)
 
 ![alt text](AdventOfCode.png)
